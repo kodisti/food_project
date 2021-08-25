@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:crud="http://java.sun.com/jsf/composite/crud"
+      xml:lang="en" lang="en">
+
+<body>
+<ui:composition template="layout/mainTemplate.xhtml">
+    <ui:define name="title">Étel</ui:define>
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="growl" showDetail="false"/>
+            <crud:crudFunctions id="crudFunctions" bean="#{foodCRUDMbean}" onCompleShowDialog="PF('foodDialog').show()"
+                                onCompleUpdate="@([id$=foodForm])"/>
+            <p:dataTable id="table" paginator="true" value="#{foodCRUDMbean.list}" var="food"
+                         selectionMode="single" selection="#{foodCRUDMbean.selectedEntity}" rowKey="#{food.id}"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                         rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+                <p:ajax event="rowSelect" update="@form"/>
+                <p:column toggleable="false" sortBy="#{food.id}" filterBy="#{food.id}"
+                          filterMatchMode="contains"
+                          headerText="ID">
+                    <h:outputText value="#{food.id}"/>
+                </p:column>
+                <p:column sortBy="#{food.createdDate}" filterBy="#{food.createdDate}" headerText="createdDate"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{food.createdDate}" converter="javax.faces.DateTime"/>
+                </p:column>
+                <p:column sortBy="#{food.lastModifiedDate}" filterBy="#{food.lastModifiedDate}" headerText="lastModifiedDate"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{food.lastModifiedDate}" converter="javax.faces.DateTime"/>
+                </p:column>
+                <p:column sortBy="#{food.creatingUser.username}" filterBy="#{food.creatingUser.username}" headerText="creatingUser"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{food.creatingUser.username}"/>
+                </p:column>
+                <p:column sortBy="#{food.modifyingUser.username}" filterBy="#{food.modifyingUser.username}" headerText="modifyingUser"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{food.modifyingUser.username}"/>
+                </p:column>
+                <p:column sortBy="#{food.name}" filterBy="#{food.name}" headerText="Név"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{food.name}"/>
+                </p:column>
+                <p:column sortBy="#{food.description}" filterBy="#{food.description}" headerText="Leírás"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{food.description}"/>
+                </p:column>
+                <p:column sortBy="#{food.price}" filterBy="#{food.price}" headerText="Ár"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{food.price} HUF"/>
+                </p:column>
+            </p:dataTable>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Nem" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Igen" type="button" styleClass="ui-confirmdialog-yes"/>
+            </p:confirmDialog>
+        </h:form>
+
+        <p:dialog id="foodDialog" widgetVar="foodDialog" header="Form" modal="true" closable="true">
+            <h:form id="foodForm">
+                <p:panelGrid layout="grid" columns="2" id="formPanel" style="width: 400px">
+                    <p:outputLabel value="Név"/>
+                    <p:inputText value="#{foodCRUDMbean.selectedEntity.name}"
+                                 maxlength="200"
+                                 required="true"
+                                 requiredMessage="Név kötelező"/>
+                    <p:outputLabel value="Leírás"/>
+                    <p:inputText value="#{foodCRUDMbean.selectedEntity.description}"
+                                 maxlength="500"
+                                 required="true"
+                                 requiredMessage="Leírás kötelező"/>
+                    <p:outputLabel value="Ár"/>
+                    <p:inputNumber value="#{foodCRUDMbean.selectedEntity.price}"
+                                   decimalPlaces="0"
+                                   symbol=" HUF"
+                                   symbolPosition="s"
+                                   required="true"
+                                   requiredMessage="Ár kötelező">
+                    </p:inputNumber>
+
+                    <p:commandButton value="Mentés" icon="pi pi-save" actionListener="#{foodCRUDMbean.save()}"
+                                     process="formPanel" update=":form"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
+</body>
+</html>
