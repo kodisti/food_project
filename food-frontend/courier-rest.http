@@ -3,10 +3,10 @@ Content-Type: application/json
 
 {
   "creatingUserId": 1,
-  "modifyingUserId": 2,
-  "name": "Kolbászos pizza",
-  "description": "magyarok kedvence",
-  "price": 100
+  "modifyingUserId": 4,
+  "firstName": "Zoltán",
+  "lastName": "Kis",
+  "phoneNumber": "+36/30 123-4567"
 }
 
 ###
@@ -16,11 +16,11 @@ Content-Type: application/json
 
 {
   "id": 2,
-  "creatingUserId": 2,
+  "creatingUserId": 4,
   "modifyingUserId": 4,
-  "name": "Kolbászos pizza",
-  "description": "magyarok kedvence",
-  "price": 1000
+  "firstName": "Zoltán",
+  "lastName": "Kis",
+  "phoneNumber": "+36/30 123-4567"
 }
 
 ###
