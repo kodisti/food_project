@@ -25,31 +25,31 @@
                           headerText="ID">
                     <h:outputText value="#{courier.id}"/>
                 </p:column>
-                <p:column sortBy="#{courier.createdDate}" filterBy="#{courier.createdDate}" headerText="createdDate"
+                <p:column sortBy="#{courier.createdDate}" filterBy="#{courier.createdDate}" headerText="Létrehozás dátuma"
                           filterMatchMode="contains">
                     <h:outputText value="#{courier.createdDate}" converter="javax.faces.DateTime"/>
                 </p:column>
-                <p:column sortBy="#{courier.lastModifiedDate}" filterBy="#{courier.lastModifiedDate}" headerText="lastModifiedDate"
+                <p:column sortBy="#{courier.lastModifiedDate}" filterBy="#{courier.lastModifiedDate}" headerText="Módosítás dátuma"
                           filterMatchMode="contains">
                     <h:outputText value="#{courier.lastModifiedDate}" converter="javax.faces.DateTime"/>
                 </p:column>
-                <p:column sortBy="#{courier.creatingUser.username}" filterBy="#{courier.creatingUser.username}" headerText="creatingUser"
+                <p:column sortBy="#{courier.creatingUser.username}" filterBy="#{courier.creatingUser.username}" headerText="Létrehozó felhasználó"
                           filterMatchMode="contains">
                     <h:outputText value="#{courier.creatingUser.username}"/>
                 </p:column>
-                <p:column sortBy="#{courier.modifyingUser.username}" filterBy="#{courier.modifyingUser.username}" headerText="modifyingUser"
+                <p:column sortBy="#{courier.modifyingUser.username}" filterBy="#{courier.modifyingUser.username}" headerText="Módosító felhasználó"
                           filterMatchMode="contains">
                     <h:outputText value="#{courier.modifyingUser.username}"/>
                 </p:column>
-                <p:column sortBy="#{courier.firstName}" filterBy="#{courier.firstName}" headerText="firstName"
+                <p:column sortBy="#{courier.firstName}" filterBy="#{courier.firstName}" headerText="Keresztnév"
                           filterMatchMode="contains">
                     <h:outputText value="#{courier.firstName}"/>
                 </p:column>
-                <p:column sortBy="#{courier.lastName}" filterBy="#{courier.lastName}" headerText="lastName"
+                <p:column sortBy="#{courier.lastName}" filterBy="#{courier.lastName}" headerText="Vezetéknév"
                           filterMatchMode="contains">
                     <h:outputText value="#{courier.lastName}"/>
                 </p:column>
-                <p:column sortBy="#{courier.phoneNumber}" filterBy="#{courier.phoneNumber}" headerText="phoneNumber"
+                <p:column sortBy="#{courier.phoneNumber}" filterBy="#{courier.phoneNumber}" headerText="Telefonszám"
                           filterMatchMode="contains">
                     <h:outputText value="#{courier.phoneNumber}"/>
                 </p:column>
@@ -60,7 +60,7 @@
             </p:confirmDialog>
         </h:form>
 
-        <p:dialog id="courierDialog" widgetVar="courierDialog" header="Form" modal="true" closable="true">
+        <p:dialog id="courierDialog" widgetVar="courierDialog" header="Futár" modal="true" closable="true">
             <h:form id="courierForm">
                 <p:panelGrid layout="grid" columns="2" id="formPanel" style="width: 400px">
                     <p:outputLabel value="Keresztnév"/>
@@ -74,10 +74,13 @@
                                  required="true"
                                  requiredMessage="Vezetéknév kötelező"/>
                     <p:outputLabel value="Telefonszám"/>
-                    <p:inputText value="#{courierCRUDMbean.selectedEntity.phoneNumber}" required="true"
+                    <p:inputText value="#{courierCRUDMbean.selectedEntity.phoneNumber}"
+                                 validatorMessage="Helytelen formátum. A helyes formátum: +36/70 701-8674"
+                                 placeholder="+36/70 701-8674"
+                                 required="true"
                                  requiredMessage="Telefonszám kötelező">
+                        <f:validateRegex pattern="^([+]?[\d]{11,11}+)?$"/>
                     </p:inputText>
-
                     <p:commandButton value="Mentés" icon="pi pi-save" actionListener="#{courierCRUDMbean.save()}"
                                      process="formPanel" update=":form"/>
                 </p:panelGrid>

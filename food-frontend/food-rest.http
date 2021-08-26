@@ -1,0 +1,43 @@
+POST http://localhost:8080/api/food
+Content-Type: application/json
+
+{
+  "creatingUserId": 1,
+  "modifyingUserId": 2,
+  "name": "Kolbászos pizza",
+  "description": "magyarok kedvence",
+  "price": 100
+}
+
+###
+
+PUT http://localhost:8080/api/food
+Content-Type: application/json
+
+{
+  "id": 2,
+  "creatingUserId": 2,
+  "modifyingUserId": 4,
+  "name": "Kolbászos pizza",
+  "description": "magyarok kedvence",
+  "price": 1000
+}
+
+###
+GET http://localhost:8080/api/food
+Accept: application/json
+
+###
+
+DELETE http://localhost:8080/api/food/8
+Accept: application/json
+
+###
+
+
+###
+
+GET http://localhost:8080/api/food/16
+Accept: application/json
+
+###

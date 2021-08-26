@@ -10,8 +10,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 public abstract class CoreRestService<T extends AbstractFoodCourier, M extends CoreRestModel> {
@@ -46,6 +45,8 @@ public abstract class CoreRestService<T extends AbstractFoodCourier, M extends C
     public Response save(@Valid M model) {
 
         T entity = initNewEntity();
+        model.setCreatedDate(new Date());
+        model.setModifyingUserId(initNewModel().getModifyingUserId());
         populateEntityFromModel(entity, model);
 
         coreService.add(entity);
@@ -61,6 +62,8 @@ public abstract class CoreRestService<T extends AbstractFoodCourier, M extends C
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         populateEntityFromModel(entity, model);
+        entity.setLastModifiedDate(new Date());
+        entity.setCreatingUser(coreService.findById(model.getId()).getCreatingUser());
         coreService.update(entity);
         return Response.ok(createModelFromEntity(entity)).build();
 
@@ -86,25 +89,7 @@ public abstract class CoreRestService<T extends AbstractFoodCourier, M extends C
         return modelMapperBean.createModelFromEntity(entity);
     }
 
-    //Generikus típus megszerzés, és reflection alapú objektum inicializálása
-    protected T initNewEntity() {
-
-        try {
-            // A konténer, beinjectáláskor, egy Proxy obejktumot hoz létre, ezért kérszer kell leolvasnunk ebben az esetben a ősosztály, és annak típusát
-            // Ha model paraméterre szükség, akkor 1 indexű elem kellene az array-ből
-            Class<T> type = (Class<T>) (((ParameterizedType) ((Class) getClass().getGenericSuperclass()).getGenericSuperclass())).getActualTypeArguments()[1];
-            return type.getConstructor().newInstance();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    protected abstract T initNewEntity();
 
     protected M initNewModel() {
         return modelMapperBean.initNewModel();

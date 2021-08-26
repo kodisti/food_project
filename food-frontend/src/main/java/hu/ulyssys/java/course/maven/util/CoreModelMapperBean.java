@@ -13,8 +13,10 @@ public abstract class CoreModelMapperBean<M extends CoreRestModel, T extends Abs
     @Inject
     private UserService userService;
 
+    protected M model;
+
     public M createModelFromEntity(T entity) {
-        M model = initNewModel();
+        model = initNewModel();
         model.setId(entity.getId());
         model.setCreatedDate(entity.getCreatedDate());
         model.setLastModifiedDate(entity.getLastModifiedDate());

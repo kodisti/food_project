@@ -6,10 +6,9 @@ import java.util.Date;
 
 public abstract class CoreRestModel {
     private Long id;
-    @NotNull
-    @JsonbDateFormat("yyyy.MM.dd")
+    @JsonbDateFormat("yyyy.MM.dd HH:mm:ss")
     private Date createdDate;
-    @JsonbDateFormat("yyyy.MM.dd")
+    @JsonbDateFormat("yyyy.MM.dd HH:mm:ss")
     private Date lastModifiedDate;
     @NotNull
     private Long creatingUserId;

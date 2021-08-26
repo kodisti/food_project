@@ -25,31 +25,31 @@
                           headerText="ID">
                     <h:outputText value="#{order.id}"/>
                 </p:column>
-                <p:column sortBy="#{order.createdDate}" filterBy="#{order.createdDate}" headerText="createdDate"
+                <p:column sortBy="#{order.createdDate}" filterBy="#{order.createdDate}" headerText="Létrehozás dátuma"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.createdDate}" converter="javax.faces.DateTime"/>
                 </p:column>
-                <p:column sortBy="#{order.lastModifiedDate}" filterBy="#{order.lastModifiedDate}" headerText="lastModifiedDate"
+                <p:column sortBy="#{order.lastModifiedDate}" filterBy="#{order.lastModifiedDate}" headerText="Módosítás dátuma"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.lastModifiedDate}" converter="javax.faces.DateTime"/>
                 </p:column>
-                <p:column sortBy="#{order.creatingUser.username}" filterBy="#{order.creatingUser.username}" headerText="creatingUser"
+                <p:column sortBy="#{order.creatingUser.username}" filterBy="#{order.creatingUser.username}" headerText="Létrehozó felhasználó"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.creatingUser.username}"/>
                 </p:column>
-                <p:column sortBy="#{order.modifyingUser.username}" filterBy="#{order.modifyingUser.username}" headerText="modifyingUser"
+                <p:column sortBy="#{order.modifyingUser.username}" filterBy="#{order.modifyingUser.username}" headerText="Módosító felhasználó"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.modifyingUser.username}"/>
                 </p:column>
-                <p:column sortBy="#{order.deliveryDate}" filterBy="#{order.deliveryDate}" headerText="deliveryDate"
+                <p:column sortBy="#{order.deliveryDate}" filterBy="#{order.deliveryDate}" headerText="Kiszállítás dátuma"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.deliveryDate}" converter="javax.faces.DateTime"/>
                 </p:column>
-                <p:column sortBy="#{order.courier.fullName}" filterBy="#{order.courier.fullName}" headerText="courier"
+                <p:column sortBy="#{order.courier.fullName}" filterBy="#{order.courier.fullName}" headerText="Futár"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.courier.fullName}"/>
                 </p:column>
-                <p:column sortBy="#{order.foodList}" filterBy="#{order.foodList}" headerText="foodList"
+                <p:column sortBy="#{order.foodList}" filterBy="#{order.foodList}" headerText="Ételek"
                           filterMatchMode="contains">
                     <p:dataList value="#{orderCRUDMbean.foodList}" var="food">
                         #{food.name}
@@ -61,19 +61,19 @@
                     <h:outputText value="#{order.foodList}"/>
                 </p:column>
                 -->
-                <p:column sortBy="#{order.settlement}" filterBy="#{order.settlement}" headerText="settlement"
+                <p:column sortBy="#{order.settlement}" filterBy="#{order.settlement}" headerText="Település"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.settlement}"/>
                 </p:column>
-                <p:column sortBy="#{order.publicSpace}" filterBy="#{order.publicSpace}" headerText="publicSpace"
+                <p:column sortBy="#{order.publicSpace}" filterBy="#{order.publicSpace}" headerText="Közterület"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.publicSpace}"/>
                 </p:column>
-                <p:column sortBy="#{order.publicSpaceNature}" filterBy="#{order.publicSpaceNature}" headerText="publicSpaceNature"
+                <p:column sortBy="#{order.publicSpaceNature}" filterBy="#{order.publicSpaceNature}" headerText="Közterület jellege"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.publicSpaceNature}"/>
                 </p:column>
-                <p:column sortBy="#{order.houseNumber}" filterBy="#{order.houseNumber}" headerText="houseNumber"
+                <p:column sortBy="#{order.houseNumber}" filterBy="#{order.houseNumber}" headerText="Házszám"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.houseNumber}"/>
                 </p:column>

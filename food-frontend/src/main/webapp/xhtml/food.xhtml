@@ -13,7 +13,7 @@
     <ui:define name="content">
         <h:form id="form">
             <p:growl id="growl" showDetail="false"/>
-            <crud:crudFunctions id="crudFunctions" bean="#{foodCRUDMbean}" onCompleShowDialog="PF('foodDialog').show()"
+            <crud:crudFunctions id="crudFunctions" rendered="#{loggedInUserbean.admin}" bean="#{foodCRUDMbean}" onCompleShowDialog="PF('foodDialog').show()"
                                 onCompleUpdate="@([id$=foodForm])"/>
             <p:dataTable id="table" paginator="true" value="#{foodCRUDMbean.list}" var="food"
                          selectionMode="single" selection="#{foodCRUDMbean.selectedEntity}" rowKey="#{food.id}"
@@ -26,19 +26,19 @@
                           headerText="ID">
                     <h:outputText value="#{food.id}"/>
                 </p:column>
-                <p:column sortBy="#{food.createdDate}" filterBy="#{food.createdDate}" headerText="createdDate"
+                <p:column sortBy="#{food.createdDate}" filterBy="#{food.createdDate}" headerText="Létrehozás dátuma"
                           filterMatchMode="contains">
                     <h:outputText value="#{food.createdDate}" converter="javax.faces.DateTime"/>
                 </p:column>
-                <p:column sortBy="#{food.lastModifiedDate}" filterBy="#{food.lastModifiedDate}" headerText="lastModifiedDate"
+                <p:column sortBy="#{food.lastModifiedDate}" filterBy="#{food.lastModifiedDate}" headerText="Módosítás dátuma"
                           filterMatchMode="contains">
                     <h:outputText value="#{food.lastModifiedDate}" converter="javax.faces.DateTime"/>
                 </p:column>
-                <p:column sortBy="#{food.creatingUser.username}" filterBy="#{food.creatingUser.username}" headerText="creatingUser"
+                <p:column sortBy="#{food.creatingUser.username}" filterBy="#{food.creatingUser.username}" headerText="Létrehozó felhasználó"
                           filterMatchMode="contains">
                     <h:outputText value="#{food.creatingUser.username}"/>
                 </p:column>
-                <p:column sortBy="#{food.modifyingUser.username}" filterBy="#{food.modifyingUser.username}" headerText="modifyingUser"
+                <p:column sortBy="#{food.modifyingUser.username}" filterBy="#{food.modifyingUser.username}" headerText="Módosító felhasználó"
                           filterMatchMode="contains">
                     <h:outputText value="#{food.modifyingUser.username}"/>
                 </p:column>
@@ -61,7 +61,7 @@
             </p:confirmDialog>
         </h:form>
 
-        <p:dialog id="foodDialog" widgetVar="foodDialog" header="Form" modal="true" closable="true">
+        <p:dialog id="foodDialog" widgetVar="foodDialog" header="Étel" modal="true" closable="true">
             <h:form id="foodForm">
                 <p:panelGrid layout="grid" columns="2" id="formPanel" style="width: 400px">
                     <p:outputLabel value="Név"/>
