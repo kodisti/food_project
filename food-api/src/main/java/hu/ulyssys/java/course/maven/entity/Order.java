@@ -1,8 +1,8 @@
 package hu.ulyssys.java.course.maven.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
+import java.util.Date;
 
 @Table(name = "foodorder")
 @Entity
@@ -12,8 +12,7 @@ public class Order extends AbstractFoodCourier {
     @JoinColumn(name = "courier_id")
     @ManyToOne
     private Courier courier;
-    @Column(name = "food_id")
-    @OneToMany(mappedBy = "foodorder")
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Food> foodList;
     @Column(name = "settlement")
     private String settlement;

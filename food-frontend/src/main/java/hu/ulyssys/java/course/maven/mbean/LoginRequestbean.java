@@ -47,6 +47,7 @@ public class LoginRequestbean {
             bean.setModel(loggedInUserModel);
             PrimeFaces.current().executeScript("PF('loginDialog').hide()");
             //Akkor  sessionbe beállítjuk a usert reprezentáló modelt.
+            reload();
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sikertelen bejelentkezés", ""));
@@ -54,7 +55,12 @@ public class LoginRequestbean {
     }
 
     public void doLogout() {
-        bean.setModel(null);
+        try {
+            bean.setModel(null);
+            reload();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void reload() throws IOException {

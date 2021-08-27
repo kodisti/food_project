@@ -51,7 +51,7 @@
                 </p:column>
                 <p:column sortBy="#{order.foodList}" filterBy="#{order.foodList}" headerText="Ételek"
                           filterMatchMode="contains">
-                    <p:dataList value="#{orderCRUDMbean.foodList}" var="food">
+                    <p:dataList value="#{order.foodList}" var="food">
                         #{food.name}
                     </p:dataList>
                 </p:column>
@@ -92,20 +92,20 @@
                                 label="deliveryDate">
                         <f:convertDateTime pattern="yyyy.MM.dd" type="date"/>
                     </p:calendar>
-                    <p:outputLabel value="Futár"/>
-                    <p:selectOneMenu value="#{orderCRUDMbean.selectedEntity.courier}" converter="#{courierConverter}">
+                    <p:outputLabel value="Futár" rendered="#{loggedInUserbean.admin}"/>
+                    <p:selectOneMenu value="#{orderCRUDMbean.selectedEntity.courier}" converter="#{courierConverter}" rendered="#{loggedInUserbean.admin}">
                         <f:selectItem itemValue="#{null}" itemLabel="Kérem válasszon"/>
                         <f:selectItems value="#{orderCRUDMbean.courierList}" var="courier" itemLabel="#{courier.fullName}"
                                        itemValue="#{courier}"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Ételek"/>
-                    <p:selectOneMenu value="#{orderCRUDMbean.food}" converter="#{foodConverter}">
+                    <p:selectOneMenu id="food" value="#{orderCRUDMbean.food}" converter="#{foodConverter}">
                         <f:selectItem itemValue="#{null}" itemLabel="Kérem válasszon"/>
-                        <f:selectItems value="#{orderCRUDMbean.foodList}" var="food" itemLabel="#{food.name}"
+                        <f:selectItems value="#{orderCRUDMbean.foods}" var="food" itemLabel="#{food.name}"
                                        itemValue="#{food}"/>
                     </p:selectOneMenu>
-                    <p:commandButton value="Hozzáadás" icon="pi pi-save" actionListener="#{orderCRUDMbean.addList}" process="formPanel"/>
-                    <p:commandButton value="Eltávolítás" icon="pi pi-save" actionListener="#{orderCRUDMbean.removeList}" process="formPanel"/>
+                    <p:commandButton value="Hozzáadás" icon="pi pi-save" actionListener="#{orderCRUDMbean.addList()}" process="formPanel" update="@([id$=food])"/>
+                    <p:commandButton value="Eltávolítás" icon="pi pi-save" actionListener="#{orderCRUDMbean.removeList()}" process="formPanel" update="@([id$=food])"/>
                     <!--
                     <p:selectManyMenu id="foods" value="#{orderCRUDMbean.selectedEntity.foodList}"
                                       converter="#{foodConverter}" styleClass="manymenu-advanced"
@@ -141,7 +141,7 @@
                                  requiredMessage="Házszám kötelező" maxlength="200">
                     </p:inputText>
                     <p:commandButton value="Mentés" icon="pi pi-save" actionListener="#{orderCRUDMbean.save()}"
-                                     update=":form"/>
+                                     process="formPanel" update=":form"/>
                 </p:panelGrid>
             </h:form>
         </p:dialog>

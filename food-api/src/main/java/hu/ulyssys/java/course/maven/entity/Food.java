@@ -1,6 +1,8 @@
 package hu.ulyssys.java.course.maven.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Table(name = "food")
 @Entity
@@ -11,10 +13,6 @@ public class Food extends AbstractFoodCourier {
     private String description;
     @Column(name = "price")
     private Integer price;
-
-    @JoinColumn(name = "order_id")
-    @ManyToOne
-    private Order foodorder;
 
     public String getName() {
         return name;
@@ -40,14 +38,6 @@ public class Food extends AbstractFoodCourier {
         this.price = price;
     }
 
-    public Order getFoodorder() {
-        return foodorder;
-    }
-
-    public void setFoodorder(Order foodorder) {
-        this.foodorder = foodorder;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,8 +47,7 @@ public class Food extends AbstractFoodCourier {
 
         if (name != null ? !name.equals(food.name) : food.name != null) return false;
         if (description != null ? !description.equals(food.description) : food.description != null) return false;
-        if (price != null ? !price.equals(food.price) : food.price != null) return false;
-        return foodorder != null ? foodorder.equals(food.foodorder) : food.foodorder == null;
+        return price != null ? price.equals(food.price) : food.price == null;
     }
 
     @Override
@@ -66,7 +55,6 @@ public class Food extends AbstractFoodCourier {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (foodorder != null ? foodorder.hashCode() : 0);
         return result;
     }
 }

@@ -1,11 +1,9 @@
 package hu.ulyssys.java.course.maven.mbean;
 
 import hu.ulyssys.java.course.maven.entity.Food;
+import hu.ulyssys.java.course.maven.entity.FoodOrder;
 import hu.ulyssys.java.course.maven.entity.Order;
-import hu.ulyssys.java.course.maven.service.CourierService;
-import hu.ulyssys.java.course.maven.service.FoodService;
-import hu.ulyssys.java.course.maven.service.OrderService;
-import hu.ulyssys.java.course.maven.service.UserService;
+import hu.ulyssys.java.course.maven.service.*;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -13,9 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Named
 @ViewScoped
@@ -28,24 +24,35 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
     private LoggedInUserbean loggedInUserbean;
 
     @Inject
+    private OrderService orderService;
+
+    @Inject
     private FoodService foodService;
 
     @Inject
-    private OrderService orderService;
+    private FoodOrderService foodOrderService;
 
-
-    private Food food;
 
     private List<Food> foods;
 
+    private Food food;
+
+    private List<Order> orderList;
+
+    private List<FoodOrder> foodOrderList;
+
     @Inject
-    public OrderCRUDMbean(OrderService service, CourierService courierService, FoodService foodService, LoggedInUserbean loggedInUserbean) {
-        super(service, courierService, foodService);
-        foods = new ArrayList<>();
+    public OrderCRUDMbean(OrderService orderService, CourierService courierService, FoodService foodService, FoodOrderService foodOrderService, LoggedInUserbean loggedInUserbean) {
+        super(orderService, courierService, foodService);
         food = new Food();
+        setFoods(foodService.getAll());
+        //getListByUserRole();
+        orderList = new ArrayList<>();
         if (!loggedInUserbean.isLoggedIn()){
-            List<Order> list = new ArrayList<>();
-            setList(list);
+            setList(orderList);
+        }else if (loggedInUserbean.isLoggedIn() && !loggedInUserbean.isAdmin()){
+            orderList.addAll(orderService.getAllByCreatingUserId(loggedInUserbean.getModel().getId()));
+            setList(orderList);
         }
     }
 
@@ -53,23 +60,35 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
     public void save() {
         try {
             user = userService.findByUsername(loggedInUserbean.getModel().getUsername());
-            getSelectedEntity().setFoodList(foods);
-            foods = new ArrayList<>();
+            /*setFoodOrderList(foodOrderService.findAllByOrderId(getSelectedEntity().getId()));
+            for (FoodOrder foodOrder: foodOrderList) {
+                getSelectedEntity().getFoodList().add(foodService.findById(foodOrder.getFoodId().getId()));
+            }*/
             if (getSelectedEntity().getId()==null){
                 getSelectedEntity().setCreatingUser(user);
+                //getSelectedEntity().setFoodList(foods);
             }else {
                 getSelectedEntity().setLastModifiedDate(new Date());
                 getSelectedEntity().setModifyingUser(user);
+                //getSelectedEntity().setFoodList(foods);
             }
             super.save();
+            getListByUserRole();
         }catch (Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sikertelen művelet", null));
         }
     }
 
+    @Override
+    public void remove(){
+        super.remove();
+        getListByUserRole();
+    }
+
     public void addList(){
         try {
-            foods.add(getFood());
+            getSelectedEntity().getFoodList().add(getFood());
+            System.out.println("FoodList: " + getFoodList());
             food = new Food();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage( "Sikeres hozzáadás"));
         }catch (Exception e){
@@ -79,11 +98,21 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
 
     public void removeList(){
         try {
-            foods.remove(getFood());
+            getSelectedEntity().getFoodList().remove(getFood());
             food = new Food();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Sikeres eltávolítás"));
         }catch (Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage( "Sikertelen eltávolítás"));
+        }
+    }
+
+    public void getListByUserRole(){
+        orderList = new ArrayList<>();
+        if (!loggedInUserbean.isLoggedIn()){
+            setList(orderList);
+        }else if (loggedInUserbean.isLoggedIn() && !loggedInUserbean.isAdmin()){
+            orderList.addAll(orderService.getAllByCreatingUserId(loggedInUserbean.getModel().getId()));
+            setList(orderList);
         }
     }
 
@@ -111,5 +140,21 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
 
     public void setFood(Food food) {
         this.food = food;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
+    }
+
+    public List<FoodOrder> getFoodOrderList() {
+        return foodOrderList;
+    }
+
+    public void setFoodOrderList(List<FoodOrder> foodOrderList) {
+        this.foodOrderList = foodOrderList;
     }
 }
