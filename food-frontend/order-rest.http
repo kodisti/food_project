@@ -2,9 +2,9 @@ POST http://localhost:8080/api/order
 Content-Type: application/json
 
 {
-  "creatingUserId": 1,
-  "modifyingUserId": 2,
-  "courierId": 1,
+  "creatingUserId": 4,
+  "deliveryDate" : "2021.08.29 21:03:30",
+  "courierId": 12,
   "settlement": "Bököny",
   "publicSpace": "Kossuth",
   "publicSpaceNature": "utca",
@@ -17,15 +17,15 @@ PUT http://localhost:8080/api/order
 Content-Type: application/json
 
 {
-  "id": 2,
-  "creatingUserId": 1,
+  "id": 25,
+  "deliveryDate" : "2021.08.30 21:03:30",
+  "creatingUserId": 4,
   "modifyingUserId": 2,
   "courierId": 1,
-  "foodListId": 1,
   "settlement": "Bököny",
   "publicSpace": "Kossuth",
   "publicSpaceNature": "utca",
-  "houseNumber": 100
+  "houseNumber": 1000
 }
 
 ###
@@ -34,7 +34,7 @@ Accept: application/json
 
 ###
 
-DELETE http://localhost:8080/api/order/8
+DELETE http://localhost:8080/api/order/25
 Accept: application/json
 
 ###
@@ -42,7 +42,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/order/16
+GET http://localhost:8080/api/order/25
 Accept: application/json
 
 ###

@@ -15,7 +15,7 @@ PUT http://localhost:8080/api/food
 Content-Type: application/json
 
 {
-  "id": 2,
+  "id": 4,
   "creatingUserId": 2,
   "modifyingUserId": 4,
   "name": "Kolbászos pizza",
@@ -29,7 +29,7 @@ Accept: application/json
 
 ###
 
-DELETE http://localhost:8080/api/food/8
+DELETE http://localhost:8080/api/food/6
 Accept: application/json
 
 ###
@@ -37,7 +37,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/food/16
+GET http://localhost:8080/api/food/4
 Accept: application/json
 
 ###

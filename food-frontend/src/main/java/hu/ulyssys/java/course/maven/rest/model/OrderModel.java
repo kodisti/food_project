@@ -11,7 +11,7 @@ public class OrderModel extends CoreRestModel{
     @JsonbDateFormat("yyyy.MM.dd HH:mm:ss")
     private Date deliveryDate;
     private Long courierId;
-    @NotEmpty(message = "Minimum egynek kell lennie")
+    //@NotEmpty(message = "Minimum egynek kell lennie")
     private List<Long> foodListId;
     @NotNull
     @Size(max = 200, message = "Maximum 200 karakter")
@@ -81,4 +81,5 @@ public class OrderModel extends CoreRestModel{
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
+
 }

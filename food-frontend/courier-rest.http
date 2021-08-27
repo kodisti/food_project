@@ -15,12 +15,12 @@ PUT http://localhost:8080/api/courier
 Content-Type: application/json
 
 {
-  "id": 2,
+  "id": 12,
   "creatingUserId": 4,
   "modifyingUserId": 4,
-  "firstName": "Zoltán",
-  "lastName": "Kis",
-  "phoneNumber": "+36/30 123-4567"
+  "firstName": "Zoltáns",
+  "lastName": "Kiss",
+  "phoneNumber": "+36/30 123-1234"
 }
 
 ###
@@ -29,7 +29,7 @@ Accept: application/json
 
 ###
 
-DELETE http://localhost:8080/api/courier/8
+DELETE http://localhost:8080/api/courier/13
 Accept: application/json
 
 ###
@@ -37,7 +37,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/courier/16
+GET http://localhost:8080/api/courier/13
 Accept: application/json
 
 ###
