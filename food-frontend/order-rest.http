@@ -4,9 +4,11 @@ Content-Type: application/json
 {
   "creatingUserId": 1,
   "modifyingUserId": 2,
-  "name": "Kolbászos pizza",
-  "description": "magyarok kedvence",
-  "price": 100
+  "courierId": 1,
+  "settlement": "Bököny",
+  "publicSpace": "Kossuth",
+  "publicSpaceNature": "utca",
+  "houseNumber": 100
 }
 
 ###
@@ -16,11 +18,14 @@ Content-Type: application/json
 
 {
   "id": 2,
-  "creatingUserId": 2,
-  "modifyingUserId": 4,
-  "name": "Kolbászos pizza",
-  "description": "magyarok kedvence",
-  "price": 1000
+  "creatingUserId": 1,
+  "modifyingUserId": 2,
+  "courierId": 1,
+  "foodListId": 1,
+  "settlement": "Bököny",
+  "publicSpace": "Kossuth",
+  "publicSpaceNature": "utca",
+  "houseNumber": 100
 }
 
 ###

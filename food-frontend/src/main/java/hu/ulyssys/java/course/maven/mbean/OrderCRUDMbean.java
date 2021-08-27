@@ -1,9 +1,11 @@
 package hu.ulyssys.java.course.maven.mbean;
 
 import hu.ulyssys.java.course.maven.entity.Food;
-import hu.ulyssys.java.course.maven.entity.FoodOrder;
 import hu.ulyssys.java.course.maven.entity.Order;
-import hu.ulyssys.java.course.maven.service.*;
+import hu.ulyssys.java.course.maven.service.CourierService;
+import hu.ulyssys.java.course.maven.service.FoodService;
+import hu.ulyssys.java.course.maven.service.OrderService;
+import hu.ulyssys.java.course.maven.service.UserService;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -11,7 +13,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Named
 @ViewScoped
@@ -29,22 +33,18 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
     @Inject
     private FoodService foodService;
 
-    @Inject
-    private FoodOrderService foodOrderService;
-
-
-    private List<Food> foods;
 
     private Food food;
 
     private List<Order> orderList;
 
-    private List<FoodOrder> foodOrderList;
+    private List<Food> listFood;
 
     @Inject
-    public OrderCRUDMbean(OrderService orderService, CourierService courierService, FoodService foodService, FoodOrderService foodOrderService, LoggedInUserbean loggedInUserbean) {
+    public OrderCRUDMbean(OrderService orderService, CourierService courierService, FoodService foodService, LoggedInUserbean loggedInUserbean) {
         super(orderService, courierService, foodService);
         food = new Food();
+        listFood = new ArrayList<>();
         setFoods(foodService.getAll());
         //getListByUserRole();
         orderList = new ArrayList<>();
@@ -60,17 +60,15 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
     public void save() {
         try {
             user = userService.findByUsername(loggedInUserbean.getModel().getUsername());
-            /*setFoodOrderList(foodOrderService.findAllByOrderId(getSelectedEntity().getId()));
-            for (FoodOrder foodOrder: foodOrderList) {
-                getSelectedEntity().getFoodList().add(foodService.findById(foodOrder.getFoodId().getId()));
-            }*/
+            List<Food> lists = new ArrayList<>();
             if (getSelectedEntity().getId()==null){
                 getSelectedEntity().setCreatingUser(user);
-                //getSelectedEntity().setFoodList(foods);
+                //getSelectedEntity().setFoodList(lists);
+                //getSelectedEntity().setFoodList(listFood);
             }else {
                 getSelectedEntity().setLastModifiedDate(new Date());
                 getSelectedEntity().setModifyingUser(user);
-                //getSelectedEntity().setFoodList(foods);
+                //getSelectedEntity().getFoodList().addAll(listFood);
             }
             super.save();
             getListByUserRole();
@@ -87,8 +85,9 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
 
     public void addList(){
         try {
+            //listFood.add(food);
             getSelectedEntity().getFoodList().add(getFood());
-            System.out.println("FoodList: " + getFoodList());
+            System.out.println("FoodList: " + listFood);
             food = new Food();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage( "Sikeres hozzáadás"));
         }catch (Exception e){
@@ -98,6 +97,7 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
 
     public void removeList(){
         try {
+            //listFood.remove(food);
             getSelectedEntity().getFoodList().remove(getFood());
             food = new Food();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Sikeres eltávolítás"));
@@ -115,6 +115,9 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
             setList(orderList);
         }
     }
+    public Date getMinDate() {
+        return new Date();
+    }
 
     @Override
     protected String dialogName() {
@@ -124,14 +127,6 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
     @Override
     protected Order initNewEntity() {
         return new Order();
-    }
-
-    public List<Food> getFoods() {
-        return foods;
-    }
-
-    public void setFoods(List<Food> foods) {
-        this.foods = foods;
     }
 
     public Food getFood() {
@@ -150,11 +145,11 @@ public class OrderCRUDMbean extends CourierAwareCRUDMbean<Order> implements Seri
         this.orderList = orderList;
     }
 
-    public List<FoodOrder> getFoodOrderList() {
-        return foodOrderList;
+    public List<Food> getListFood() {
+        return listFood;
     }
 
-    public void setFoodOrderList(List<FoodOrder> foodOrderList) {
-        this.foodOrderList = foodOrderList;
+    public void setListFood(List<Food> listFood) {
+        this.listFood = listFood;
     }
 }

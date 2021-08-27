@@ -12,12 +12,12 @@ import java.util.List;
 public abstract class CourierAwareCRUDMbean<T extends AbstractFoodCourier> extends FoodCourierCRUDMbean<T>{
 
     private List<Courier> courierList;
-    private List<Food> foodList;
+    private List<Food> foods;
 
     public CourierAwareCRUDMbean(FoodCourierService<T> service, CourierService courierService, FoodService foodService) {
         super(service);
         courierList = courierService.getAll();
-        foodList = foodService.getAll();
+        foods = foodService.getAll();
     }
 
     public List<Courier> getCourierList() {
@@ -28,11 +28,11 @@ public abstract class CourierAwareCRUDMbean<T extends AbstractFoodCourier> exten
         this.courierList = courierList;
     }
 
-    public List<Food> getFoodList() {
-        return foodList;
+    public List<Food> getFoods() {
+        return foods;
     }
 
-    public void setFoodList(List<Food> foodList) {
-        this.foodList = foodList;
+    public void setFoods(List<Food> foods) {
+        this.foods = foods;
     }
 }

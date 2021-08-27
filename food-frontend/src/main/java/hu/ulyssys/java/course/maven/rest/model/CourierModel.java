@@ -1,6 +1,7 @@
 package hu.ulyssys.java.course.maven.rest.model;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class CourierModel extends CoreRestModel{
@@ -11,7 +12,7 @@ public class CourierModel extends CoreRestModel{
     @Size(max = 500, message = "Maximum 500 karakter")
     private String lastName;
     @NotNull
-    @Size(min = 12,max = 12, message = "Maximum 12 karakter, melynek +36dddddddd alakban kell lenni")
+    @Pattern(regexp = "^([+]{1}[3]{1}[6]{1}[/]{1}[\\d]{2}[ ]{1}[\\d]{3}[-]{1}[\\d]{4}+)?$", message = "+36/70 701-8674 alakban kell megadni a telefonszámot")
     private String phoneNumber;
 
     public String getFirstName() {

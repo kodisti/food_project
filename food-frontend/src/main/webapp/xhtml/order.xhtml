@@ -55,12 +55,6 @@
                         #{food.name}
                     </p:dataList>
                 </p:column>
-                <!--
-                <p:column sortBy="#{order.foodList}" filterBy="#{order.foodList}" headerText="foodList"
-                          filterMatchMode="contains">
-                    <h:outputText value="#{order.foodList}"/>
-                </p:column>
-                -->
                 <p:column sortBy="#{order.settlement}" filterBy="#{order.settlement}" headerText="Település"
                           filterMatchMode="contains">
                     <h:outputText value="#{order.settlement}"/>
@@ -89,6 +83,9 @@
                 <p:panelGrid layout="grid" columns="2" id="formPanel" style="width: 400px">
                     <p:outputLabel value="Kiszállítás dátuma"/>
                     <p:calendar value="#{orderCRUDMbean.selectedEntity.deliveryDate}" pattern="yyyy.MM.dd"
+                                mindate="#{orderCRUDMbean.minDate}"
+                                required="true"
+                                requiredMessage="Kiszállítás dátuma kötelező"
                                 label="deliveryDate">
                         <f:convertDateTime pattern="yyyy.MM.dd" type="date"/>
                     </p:calendar>
@@ -106,17 +103,6 @@
                     </p:selectOneMenu>
                     <p:commandButton value="Hozzáadás" icon="pi pi-save" actionListener="#{orderCRUDMbean.addList()}" process="formPanel" update="@([id$=food])"/>
                     <p:commandButton value="Eltávolítás" icon="pi pi-save" actionListener="#{orderCRUDMbean.removeList()}" process="formPanel" update="@([id$=food])"/>
-                    <!--
-                    <p:selectManyMenu id="foods" value="#{orderCRUDMbean.selectedEntity.foodList}"
-                                      converter="#{foodConverter}" styleClass="manymenu-advanced"
-                                      var="c" filter="true" filterMatchMode="contains" showCheckbox="true">
-                        <f:selectItems value="#{orderCRUDMbean.foodList}" var="food" itemLabel="#{food.name}"
-                                       itemValue="#{food}"/>
-                        <p:column>
-                            <h:outputText value="#{c.name}"/>
-                        </p:column>
-                    </p:selectManyMenu>
-                    -->
                     <p:outputLabel value="Település"/>
                     <p:inputText value="#{orderCRUDMbean.selectedEntity.settlement}"
                                  maxlength="200"

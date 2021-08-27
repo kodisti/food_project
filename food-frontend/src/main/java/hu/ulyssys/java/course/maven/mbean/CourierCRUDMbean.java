@@ -33,14 +33,18 @@ public class CourierCRUDMbean extends FoodCourierCRUDMbean<Courier> implements S
     @Override
     public void save() {
         try {
-            user = userService.findByUsername(loggedInUserbean.getModel().getUsername());
-            if (getSelectedEntity().getId()==null){
-                getSelectedEntity().setCreatingUser(user);
-            }else {
-                getSelectedEntity().setLastModifiedDate(new Date());
-                getSelectedEntity().setModifyingUser(user);
+            if (getSelectedEntity().getFirstName().compareTo(getSelectedEntity().getLastName()) != 0){
+                user = userService.findByUsername(loggedInUserbean.getModel().getUsername());
+                if (getSelectedEntity().getId()==null){
+                    getSelectedEntity().setCreatingUser(user);
+                }else {
+                    getSelectedEntity().setLastModifiedDate(new Date());
+                    getSelectedEntity().setModifyingUser(user);
+                }
+                super.save();
+            }else if (getSelectedEntity().getFirstName().compareTo(getSelectedEntity().getLastName()) == 0){
+               FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Vezetéknév és keresztnév nem egyezhetnek meg", null));
             }
-            super.save();
         }catch (Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sikertelen művelet", null));
         }
