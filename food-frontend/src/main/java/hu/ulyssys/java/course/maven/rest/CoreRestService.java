@@ -61,6 +61,7 @@ public abstract class CoreRestService<T extends AbstractFoodCourier, M extends C
         if (entity == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        model.setCreatedDate(coreService.findById(model.getId()).getCreatedDate());
         populateEntityFromModel(entity, model);
         entity.setLastModifiedDate(new Date());
         entity.setCreatingUser(coreService.findById(model.getId()).getCreatingUser());

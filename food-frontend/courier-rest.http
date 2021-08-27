@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "creatingUserId": 1,
   "modifyingUserId": 4,
-  "firstName": "Zoltán",
+  "firstName": "Zoltán123",
   "lastName": "Kis",
   "phoneNumber": "+36/30 123-4567"
 }
@@ -15,10 +15,10 @@ PUT http://localhost:8080/api/courier
 Content-Type: application/json
 
 {
-  "id": 12,
+  "id": 15,
   "creatingUserId": 4,
   "modifyingUserId": 4,
-  "firstName": "Zoltáns",
+  "firstName": "Zoltáns123",
   "lastName": "Kiss",
   "phoneNumber": "+36/30 123-1234"
 }
